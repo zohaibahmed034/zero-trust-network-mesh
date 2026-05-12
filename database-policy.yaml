@@ -1,0 +1,18 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: database-policy
+  namespace: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  rules:
+  - from:
+    - source:
+        namespaces: ["backend"]
+        principals: ["cluster.local/ns/backend/sa/default"]
+    to:
+    - operation:
+        ports: ["5432"]
+
